@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 // it is a test commin so that i can se what is happened
 // it is another hello
+// now 
 import Home from './pages/home/Home';
 import Order from './pages/order/Order';
 import Cart from './pages/cart/Cart';

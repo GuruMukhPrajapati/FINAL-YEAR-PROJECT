@@ -1,5 +1,5 @@
 import React from 'react';
-
+//
 const AboutPage = () => {
   return (
     <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12">

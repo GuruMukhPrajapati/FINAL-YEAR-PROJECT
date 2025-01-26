@@ -20,22 +20,24 @@ function myState(props) {
 
     const [loading, setLoading] = useState(false);
 
-    const [products, setProducts] = useState({
-        title: null,
-        price: null,
-        imageUrl: null,
-        category: null,
-        description: null,
-        time: Timestamp.now(),
-        date: new Date().toLocaleString(
-            "en-US",
-            {
-                month: "short",
-                day: "2-digit",
-                year: "numeric",
-            }
-        )
-    });
+    // In myState.jsx, update the products state:
+const [products, setProducts] = useState({
+    title: null,
+    price: null,
+    imageUrl: null,
+    category: null,
+    description: null,
+    size: 'M', // Add default size
+    time: Timestamp.now(),
+    date: new Date().toLocaleString(
+        "en-US",
+        {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+        }
+    )
+});
 
     const addProduct = async () => {
         if (products.title == null || products.price == null || products.imageUrl == null || products.category == null || products.description == null) {

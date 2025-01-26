@@ -1,5 +1,5 @@
 import React from 'react';
-//hrllo 
+
 const AboutPage = () => {
   return (
     <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12">
@@ -10,7 +10,7 @@ const AboutPage = () => {
           <h2 className="text-2xl font-bold mb-2">Our Mission</h2>
           <p className="text-lg mb-4">
             Our mission is to create a dynamic and innovative platform that showcases our skills and knowledge in web development. We strive to deliver a user-friendly experience while pushing the boundaries of our technical abilities.
-          </p>
+            </p>
         </div>
         <div className="w-full md:w-1/2 xl:w-1/3 p-4">
           <h2 className="text-2xl font-bold mb-2">Our Team</h2>

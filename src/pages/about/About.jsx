@@ -21,7 +21,7 @@ const AboutPage = () => {
         <div className="w-full md:w-1/2 xl:w-1/3 p-4">
           <h2 className="text-2xl font-bold mb-2">Get in Touch</h2>
           <p className="text-lg mb-4">
-            We can connect with each other on social media. Follow us on Twitter, LinkedIn, and GitHub to stay updated on our project progress and to engage in discussions about web development and technology.
+             each other on social media. Follow us on Twitter, LinkedIn, and GitHub to stay updated on our project progress and to engage in discussions about web development and technology.
           </p>
         </div>
       </div>

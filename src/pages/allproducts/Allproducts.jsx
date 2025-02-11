@@ -4,25 +4,11 @@ import ProductCard from '../../components/productCard/ProductCard'
 import Layout from '../../components/layout/Layout'
 import myContext from '../../context/data/myContext'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../../redux/cartSlice'
-import { toast } from 'react-toastify'
 
 function Allproducts() {
   const context = useContext(myContext)
   const { mode, product, searchkey, setSearchkey, filterType, setFilterType,
       filterPrice, setFilterPrice } = context
-
-  const dispatch = useDispatch()
-  const cartItems = useSelector((state) => state.cart);
-
-  const addCart = (product) => {
-      dispatch(addToCart(product));
-      toast.success('add to cart');
-  }
-
-  useEffect(() => {
-      localStorage.setItem('cart', JSON.stringify(cartItems));
-  }, [cartItems])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -71,16 +57,6 @@ function Allproducts() {
                       <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1" style={{ color: mode === 'dark' ? 'white' : '', }}>E-Bharat</h2>
                       <h1 className="title-font text-lg font-medium text-gray-900 mb-3" style={{ color: mode === 'dark' ? 'white' : '', }}>{title}</h1>
                       <p className="leading-relaxed mb-3" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{price}</p>
-                      <div className=" flex justify-center">
-                        <button type="button" 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            addCart(item);
-                          }}
-                          className="focus:outline-none text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full py-2">
-                          Add To Cart
-                        </button>
-                      </div>
                     </div>
                   </div>
                 </div>

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Layout from '../../components/layout/Layout'
 import myContext from '../../context/data/myContext';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { doc, getDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
@@ -15,6 +15,9 @@ function ProductInfo() {
     const [selectedSize, setSelectedSize] = useState(null)
     const [isLiked, setIsLiked] = useState(false)
     const params = useParams()
+    
+    // Get user data from redux
+    const user = useSelector((state) => state.user?.user);
 
     const getProductData = async () => {
         setLoading(true)
@@ -38,6 +41,12 @@ function ProductInfo() {
     const addCart = (products) => {
         if (!selectedSize) {
             toast.error('Please select a size first');
+            return;
+        }
+        
+        // Check if user is logged in
+        if (!user) {
+            toast.error('Please login first');
             return;
         }
         

@@ -9,12 +9,12 @@ import Loader from '../../components/loader/Loader';
 function Login() {
     const context = useContext(myContext)
     const {loading, setLoading} = context;
-
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    
     const navigate = useNavigate();
-
+    
     const login = async () => {
         setLoading(true)
         try {
@@ -37,9 +37,8 @@ function Login() {
             console.log(error)
             setLoading(loading)
         }
-
     }
-   
+    
     return (
         <div className=' flex justify-center items-center h-screen'>
             {loading && <Loader/>}
@@ -74,6 +73,13 @@ function Login() {
                 </div>
                 <div>
                     <h2 className='text-white'>Don't have an account <Link className=' text-yellow-500 font-bold' to={'/signup'}>Signup</Link></h2>
+                </div>
+                <div className='mt-4'>
+                    <Link to={'/'}>
+                        <button className='bg-blue-500 w-full text-white font-bold px-2 py-2 rounded-lg'>
+                            Go to Home
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

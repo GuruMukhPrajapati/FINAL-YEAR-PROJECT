@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import myContext from '../../context/data/myContext';
 import { toast } from 'react-toastify';
@@ -11,27 +11,60 @@ function Signup() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [formErrors, setFormErrors] = useState({});
+    const [isFormValid, setIsFormValid] = useState(false);
     const context = useContext(myContext);
     const { loading, setLoading } = context;
     const navigate = useNavigate();
 
     // Regular expression for email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    
+    // Regular expression for name validation - no numbers or digits allowed
+    const nameRegex = /^[a-zA-Z\s]+$/;
+
+    // Validate form fields
+    const validateForm = () => {
+        const errors = {};
+        
+        // Validate name
+        if (!name.trim()) {
+            errors.name = "Name is required";
+        } else if (!nameRegex.test(name)) {
+            errors.name = "Name should not contain numbers or special characters";
+        }
+        
+        // Validate email
+        if (!email.trim()) {
+            errors.email = "Email is required";
+        } else if (!emailRegex.test(email)) {
+            errors.email = "Please enter a valid email in format: username@domainname";
+        }
+        
+        // Validate password
+        if (!password.trim()) {
+            errors.password = "Password is required";
+        } else if (password.length < 6) {
+            errors.password = "Password should be at least 6 characters";
+        }
+        
+        setFormErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
+
+    // Check form validity on input change
+    useEffect(() => {
+        const isValid = validateForm();
+        setIsFormValid(isValid);
+    }, [name, email, password]);
 
     const signup = async () => {
+        if (!isFormValid) {
+            toast.error("Please correct the errors in the form");
+            return;
+        }
+
         setLoading(true);
-
-        // Check if all fields are filled
-        if (name === "" || email === "" || password === "") {
-            setLoading(false);
-            return toast.error("All fields are required");
-        }
-
-        // Validate email format
-        if (!emailRegex.test(email)) {
-            setLoading(false);
-            return toast.error("Please enter a valid email address");
-        }
 
         try {
             // Create user in Firebase Authentication
@@ -110,7 +143,8 @@ function Signup() {
                 <div className='flex justify-center mb-3'>
                     <button
                         onClick={signup}
-                        className='bg-red-500 w-full text-white font-bold px-2 py-2 rounded-lg'>
+                        disabled={!isFormValid}
+                        className={`bg-red-500 w-full text-white font-bold px-2 py-2 rounded-lg ${!isFormValid ? 'opacity-50 cursor-not-allowed' : ''}`}>
                         Signup
                     </button>
                 </div>
@@ -130,4 +164,3 @@ function Signup() {
 }
 
 export default Signup;
-// this singn

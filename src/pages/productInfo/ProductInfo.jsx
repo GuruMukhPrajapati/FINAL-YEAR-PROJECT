@@ -16,14 +16,19 @@ function ProductInfo() {
     const [isLiked, setIsLiked] = useState(false)
     const params = useParams()
     
-    // Get user data from redux
-    const user = useSelector((state) => state.user?.user);
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart);
 
     const getProductData = async () => {
         setLoading(true)
         try {
             const productTemp = await getDoc(doc(fireDB, "products", params.id))
-            setProducts(productTemp.data());
+            // Make sure we're setting the product with its ID
+            const productData = productTemp.data();
+            setProducts({
+                ...productData,
+                id: params.id  // Add the document ID to the product data
+            });
             setLoading(false)
         } catch (error) {
             console.log(error)
@@ -35,31 +40,30 @@ function ProductInfo() {
         getProductData()
     }, [])
 
-    const dispatch = useDispatch()
-    const cartItems = useSelector((state) => state.cart)
-
-    const addCart = (products) => {
+    const addCart = (product) => {
         if (!selectedSize) {
             toast.error('Please select a size first');
             return;
         }
         
-        // Check if user is logged in
-        if (!user) {
-            toast.error('Please login first');
-            return;
-        }
+        // Removed the login check
         
+        // Create a new product object with the selected size
         const productWithSize = {
-            ...products,
+            ...product,
             selectedSize: selectedSize
         }
+        
+        // Dispatch the action to add to cart
         dispatch(addToCart(productWithSize));
         toast.success('Added to cart');
     }
 
+    // Save cart items to localStorage whenever cart changes
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cartItems));
+        if (cartItems) {
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+        }
     }, [cartItems])
 
     const handleLikeClick = () => {
